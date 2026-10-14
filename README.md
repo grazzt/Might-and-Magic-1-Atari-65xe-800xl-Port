@@ -4,7 +4,7 @@
 
 > **This is an unofficial fan port.** It is not made, endorsed or supported by New World Computing, 3DO, Ubisoft or any other owner of the game. *Might and Magic* and everything in the original game, its code, graphics, text, music, sound and data, are the copyright and trademark of **New World Computing, Inc.** and of the present owners of those rights. See "Rights and credits" below.
 
-This is the 64 KB sibling of the [130XE port](../github/README.md). It is not a rewrite either: the C64 game's own 6502 code runs on the Atari, unchanged apart from the few instructions that address the C64's video, sound and timer chips, and a small Atari kernel stands in for the rest of the C64. The 130XE version keeps a converted copy of the screen and its colour tables in an extra 16 KB memory bank, which a 64 KB machine does not have. This version instead **shows the game's own two C64-format bitmaps directly** and changes colour and character-set base per row with display-list interrupts. That fits, at the cost of colour (see "Differences").
+This is the 64 KB sibling of the [130XE port](https://github.com/grazzt/Might-and-Magic-1-Atari-130xe-Port). It is not a rewrite either: the C64 game's own 6502 code runs on the Atari, unchanged apart from the few instructions that address the C64's video, sound and timer chips, and a small Atari kernel stands in for the rest of the C64. The 130XE version keeps a converted copy of the screen and its colour tables in an extra 16 KB memory bank, which a 64 KB machine does not have. This version instead **shows the game's own two C64-format bitmaps directly** and changes colour and character-set base per row with display-list interrupts. That fits, at the cost of colour (see "Differences").
 
 ![The original title](screenshots/intro-title.png)
 
@@ -41,7 +41,7 @@ SHA-256:
 374139852b32b69e22c321e267a7317d619ea4496d6706bd9675774d85c52f57  colour/mm1-65xe-colour-disk1.atr
 ```
 
-Also in this folder: [`docs/`](docs/) (the notes specific to the 64 KB build) and [`src/`](src/) (the source). The 130XE disks are in [`../github/`](../github/) and are not interchangeable with these: that build needs 128 KB, and this one does not use it.
+Also in this repository: [`docs/`](docs/) (the notes specific to the 64 KB build) and [`src/`](src/) (the source). The 130XE disks are in [the 130XE repository](https://github.com/grazzt/Might-and-Magic-1-Atari-130xe-Port) and are not interchangeable with these: that build needs 128 KB, and this one does not use it.
 
 ## What you need
 
