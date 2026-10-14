@@ -1,0 +1,72 @@
+{
+  "shared_project": "../wizardry_1",
+  "override_environment": "WIZARDRY_ROOT",
+  "recorded_on": "2026-10-09",
+  "git_commit": "640b8915bb4cb46088bc8f8418aa399957decfe8",
+  "files": [
+    {
+      "file": "c64/disk/D64_Format.txt",
+      "sha256": "f15cec6f4c7f3761d824c634edcd84770d667ab4a27896e0586d76f7d8ce7ef9"
+    },
+    {
+      "file": "c64/manuals/Commodore_64_Programmers_Reference_Guide.txt",
+      "sha256": "85973a693b90b31fd44850c4e23e314da467484bcac2d40c5441241a3062ca1a"
+    },
+    {
+      "file": "c64/manuals/Mapping_the_Commodore_64.txt",
+      "sha256": "59082a30bb177cda3f0fa88dbfe3d5e5efdfbd32cefe27bebe497800f0c551cc"
+    },
+    {
+      "file": "c64/programming/VIC_II_Reference.txt",
+      "sha256": "ed558b2480638b153d0ead4726b8b675e4a0b945f2ab4d37c17a3d892cf00828"
+    },
+    {
+      "file": "c64/tools/VICE_Monitor.html",
+      "sha256": "6a911550c532f1c8be6d88f97c6cfee09a9b714cc126ab27e57d7842e6feca7b"
+    },
+    {
+      "file": "common/tools/ca65.html",
+      "sha256": "30fbde49fe56a739e6303e6dfad83a8a4823ea052cadf35d39a9dad03fde60b3"
+    },
+    {
+      "file": "common/tools/da65.html",
+      "sha256": "1b8c77e452a1159a8b48b27c7fcc29df32ae2b8544a0b691f259b5ef01010136"
+    },
+    {
+      "file": "common/tools/ld65.html",
+      "sha256": "f3ac06980fdbb274289364394eb4f7b9eb18f7f76a9ec6276e96e8b54637773a"
+    },
+    {
+      "file": "tools/pvm/cpu6502.py",
+      "sha256": "be703de83f336321589d59c248f13c4fab282c3496b2b481c82d112acbcfabf3"
+    },
+    {
+      "file": "tools/emulators/SOURCES.json",
+      "sha256": "ccb1a3f51ebbfecc1c5479870310c58d9eae3b362c66bc7a516b496c4057af0a"
+    },
+    {
+      "file": "tools/toolchain/SOURCES.json",
+      "sha256": "fb6d6725569cf8b42a88379a00f8db149c79a1251c07494ba1a5dedcc2726a90"
+    },
+    {
+      "file": "tools/emulators/local/usr/bin/x64sc",
+      "sha256": "e3fafd35e65ed271011cd694790998bfabe20a91b64acf9efe61d50795d5cc1c"
+    },
+    {
+      "file": "tools/emulators/local/usr/bin/c1541",
+      "sha256": "3accaaed24b0a84ced9252ee5ffcbc1e4d1b64a9d946b7ca19a76d7e53da375a"
+    },
+    {
+      "file": "tools/toolchain/local/bin/ca65",
+      "sha256": "fb5718797003f33699d2361c2dad23dfdc1dff06ff932e0ba114ced22a1cb58c"
+    },
+    {
+      "file": "tools/toolchain/local/bin/ld65",
+      "sha256": "02de941df0ddf7c09796e4178c41235e77c131552dae4b5d4a67726c33ae3764"
+    },
+    {
+      "file": "tools/toolchain/local/bin/da65",
+      "sha256": "dc6586f7c9b68dc144d82cc55e45e5e4a2a785eed70a2532b220240d815c9f69"
+    }
+  ]
+}

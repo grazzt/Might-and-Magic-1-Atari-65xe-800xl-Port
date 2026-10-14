@@ -1,0 +1,6 @@
+# Original v2: boot side A and stop where the second boot file jumps to the
+# game's first program at $4000. Run with --keep-ram --keep-log: the RAM, the
+# I/O area and the registers at this point are the host oracle's starting
+# state (tools/oracle.py, test-artifacts/c64/oracle-start).
+until $4000
+mark entry

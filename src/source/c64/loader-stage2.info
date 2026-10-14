@@ -1,0 +1,56 @@
+# ACTIVISION INC. (side A, 1,538-byte PRG), first three pages: $2000-$22FF.
+# Shows the wait message, runs the disk check, installs the fastloader that
+# follows in the same file (fastload-c64.info) and loads the title program.
+GLOBAL { STARTADDR $2000; CPU "6502"; COMMENTS 0; };
+
+RANGE { START $2047; END $2047; TYPE ByteTable; NAME "check_failed"; COMMENT "1 until the drive returns $AF from the track 1 header gap"; };
+RANGE { START $2063; END $2064; TYPE TextTable; NAME "cmd_initialize"; COMMENT "I0"; };
+RANGE { START $207B; END $20A0; TYPE ByteTable; NAME "mw_check_0300"; COMMENT "M-W $0300, 32 bytes of drive code: see drive-check.info"; };
+RANGE { START $20B7; END $20DC; TYPE ByteTable; NAME "mw_check_0320"; COMMENT "M-W $0320, 32 bytes"; };
+RANGE { START $20F3; END $2118; TYPE ByteTable; NAME "mw_check_0340"; COMMENT "M-W $0340, 32 bytes, zero padded"; };
+RANGE { START $2144; END $214A; TYPE ByteTable; NAME "mw_job_track"; COMMENT "M-W $0006: buffer 0 job is track 1, sector 1"; };
+RANGE { START $214B; END $2151; TYPE ByteTable; NAME "mw_job_execute"; COMMENT "M-W $0000 = $E0: seek, then execute buffer 0"; };
+RANGE { START $2168; END $216C; TYPE ByteTable; NAME "mr_result"; COMMENT "M-R $0400: the byte the drive code stored"; };
+RANGE { START $2193; END $21A3; TYPE ByteTable; NAME "text_wait"; COMMENT "ONE MOMENT PLEASE, as screen code + $40"; };
+RANGE { START $21A4; END $21AE; TYPE ByteTable; NAME "text_version"; COMMENT "VERSION 2.0, as screen code + $40"; };
+RANGE { START $222B; END $22FF; TYPE ByteTable; NAME "padding"; };
+
+LABEL { ADDR $2003; NAME "clear_and_check"; COMMENT "Clear the screen, run the disk check, disable saving if it failed"; };
+LABEL { ADDR $201F; NAME "disable_write"; COMMENT "Turn the JMP at $9D10 (write) into BRK before the block is copied"; };
+LABEL { ADDR $2025; NAME "disk_check"; };
+LABEL { ADDR $2048; NAME "open_command_channel"; };
+LABEL { ADDR $2065; NAME "upload_check_0300"; };
+LABEL { ADDR $20A1; NAME "upload_check_0320"; };
+LABEL { ADDR $20DD; NAME "upload_check_0340"; };
+LABEL { ADDR $2119; NAME "run_check_job"; };
+LABEL { ADDR $2152; NAME "request_result"; };
+LABEL { ADDR $216D; NAME "read_result"; };
+LABEL { ADDR $2188; NAME "delay"; };
+LABEL { ADDR $21AF; NAME "start"; };
+LABEL { ADDR $2300; NAME "fastload_image"; COMMENT "Copied to $9D00-$9FFF"; };
+LABEL { ADDR $2310; NAME "fastload_image_write_jmp"; };
+LABEL { ADDR $2400; NAME "fastload_image_page2"; };
+LABEL { ADDR $2500; NAME "fastload_image_page3"; };
+
+LABEL { ADDR $4000; NAME "title_entry"; };
+LABEL { ADDR $9D00; NAME "param_address"; SIZE 2; };
+LABEL { ADDR $9D02; NAME "param_length"; SIZE 2; };
+LABEL { ADDR $9D04; NAME "param_offset"; };
+LABEL { ADDR $9D05; NAME "param_block"; SIZE 2; };
+LABEL { ADDR $9D07; NAME "fastload_init"; };
+LABEL { ADDR $9D0D; NAME "fastload_read"; };
+LABEL { ADDR $9D13; NAME "fastload_set_disk_id"; };
+LABEL { ADDR $9D16; NAME "fastload_get_disk_id"; };
+LABEL { ADDR $9E00; NAME "fastload_page2"; };
+LABEL { ADDR $9F00; NAME "fastload_page3"; };
+LABEL { ADDR $FFBA; NAME "SETLFS"; };
+LABEL { ADDR $FFBD; NAME "SETNAM"; };
+LABEL { ADDR $FFC0; NAME "OPEN"; };
+LABEL { ADDR $FFC3; NAME "CLOSE"; };
+LABEL { ADDR $FFC6; NAME "CHKIN"; };
+LABEL { ADDR $FFC9; NAME "CHKOUT"; };
+LABEL { ADDR $FFCC; NAME "CLRCHN"; };
+LABEL { ADDR $FFCF; NAME "CHRIN"; };
+LABEL { ADDR $FFD2; NAME "CHROUT"; };
+LABEL { ADDR $FFAE; NAME "UNLSN"; };
+LABEL { ADDR $FFE7; NAME "CLALL"; };

@@ -1,0 +1,36 @@
+# Original v2: boot to the options menu, create a character (robber, human,
+# good, male, named TEST) and save it, which writes the roster to side B.
+until $41ab          # title keyboard poll
+mark title
+key 5f               # left arrow: the game's Escape
+wait $1000000        # this prompt polls the keyboard itself, not through $0E3B
+mark insert-b
+attach B
+wait $100000         # let the drive notice the new disk
+key 0d
+ready
+mark menu
+press 43             # C: create new characters
+ready
+mark rolled
+press 36             # 6
+ready
+mark class
+press 31             # 1
+press 31             # 1
+press 31             # 1
+ready
+mark name
+press 54             # T
+press 45             # E
+press 53             # S
+press 54             # T
+press 0d             # Return
+ready
+mark save-prompt
+press 59             # Y: save character
+ready
+mark saved
+press 5f             # Escape
+ready
+mark menu-again

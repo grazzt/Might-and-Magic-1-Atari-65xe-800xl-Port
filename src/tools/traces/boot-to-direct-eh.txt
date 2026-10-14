@@ -1,0 +1,109 @@
+# Original v2: EH moving maze: supply SPACE at its own key-reader call.
+# See docs/GAMEPLAY-COVERAGE.md for fixture scope and observed outcomes.
+until $41ab          # title keyboard poll
+mark title
+key 5f               # left arrow: the game's Escape
+wait $1000000        # this prompt polls the keyboard itself, not through $0E3B
+mark insert-b
+attach B
+wait $100000         # let the drive notice the new disk
+key 0d
+ready
+mark menu
+press 31             # town 1, Sorpigal
+ready
+mark inn
+press 01             # CTRL-A adds a character
+until $78a2          # the inn is about to test the KERNAL CTRL flag
+poke 028e 04
+press 02             # CTRL-B adds a character
+until $78a2          # the inn is about to test the KERNAL CTRL flag
+poke 028e 04
+press 03             # CTRL-C adds a character
+until $78a2          # the inn is about to test the KERNAL CTRL flag
+poke 028e 04
+press 04             # CTRL-D adds a character
+until $78a2          # the inn is about to test the KERNAL CTRL flag
+poke 028e 04
+press 05             # CTRL-E adds a character
+until $78a2          # the inn is about to test the KERNAL CTRL flag
+poke 028e 04
+press 06             # CTRL-F adds a character
+until $78a2          # the inn is about to test the KERNAL CTRL flag
+poke 028e 04
+ready
+mark party
+press 58             # X: leave the inn
+ready
+mark town
+press 49             # I
+press 49             # I
+press 49             # I
+press 49             # I
+press 4c             # L
+press 49             # I
+press 49             # I
+press 49             # I
+press 49             # I
+press 4c             # L
+press 49             # I
+press 49             # I
+press 49             # I
+press 49             # I
+press 49             # I
+press 49             # I
+press 49             # I
+ready
+mark gate
+press 59             # Y: leave town
+ready
+mark insert-c
+attach C
+wait $100000         # let the drive notice the new disk
+ready
+poke 002d 00 00      # the wait spun the key-wait loop: reset its two counters
+press 0d
+ready
+mark outdoors
+# Position fixture: 12,15, facing N; original area, events and game code unchanged.
+poke 003b 0c 0f
+poke 0040 03 0c c0 30 ff f0 10 01
+press 4c
+ready
+press 49
+ready
+mark ed
+# Position fixture: 0,13, facing W; original area, events and game code unchanged.
+poke 003b 00 0d
+poke 0040 0c 30 03 c0 f0 01 ff 10
+press 4c
+ready
+press 49
+ready
+mark ak
+# Position fixture: 14,11, facing S; original area, events and game code unchanged.
+poke 003b 0e 0b
+poke 0040 30 c0 0c 03 01 10 f0 ff
+press 4c
+ready
+press 49
+ready
+press 59
+ready
+# Destination fixture for the pending native area load: EH/D.
+poke 0083 04 07 03
+poke 003b 08 02
+attach D
+wait $100000
+ready
+poke 002d 00 00
+press 0d
+ready
+mark eh-entered
+# Event position fixture: EH at 6,4, then turn north.
+poke 003b 06 04
+poke 0040 03 0c c0 30 ff f0 10 01
+press 4c
+poll 86d2 20
+ready
+mark eh-direct-key

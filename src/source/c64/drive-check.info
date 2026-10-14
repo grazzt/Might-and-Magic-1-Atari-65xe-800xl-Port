@@ -1,0 +1,18 @@
+# Disk check uploaded by the stage-2 loader to 1541 buffer 0 ($0300) and run as
+# a job on track 1. It waits for a header block, skips 17 further GCR bytes and
+# returns the next one, the eighth byte of the header gap, in $0400. The loader
+# accepts $AF. A standard gap is $55, so sector copies fail the check.
+GLOBAL { STARTADDR $0300; CPU "6502"; COMMENTS 0; };
+RANGE { START $034D; END $035F; TYPE ByteTable; NAME "padding"; };
+LABEL { ADDR $0311; NAME "next_sync"; };
+LABEL { ADDR $0315; NAME "wait_sync"; COMMENT "About 64K polls, then give up with 3"; };
+LABEL { ADDR $031F; NAME "poll_sync"; };
+LABEL { ADDR $0328; NAME "wait_block_id"; };
+LABEL { ADDR $033A; NAME "skip_bytes"; };
+LABEL { ADDR $0343; NAME "store_result"; };
+LABEL { ADDR $0400; NAME "result"; };
+LABEL { ADDR $1C00; NAME "VIA2_PB"; COMMENT "bit 7 low while a sync mark passes"; };
+LABEL { ADDR $1C01; NAME "VIA2_PA"; COMMENT "GCR byte under the head"; };
+LABEL { ADDR $1C0C; NAME "VIA2_PCR"; };
+LABEL { ADDR $F96E; NAME "DOS_job_done"; };
+LABEL { ADDR $FE00; NAME "DOS_read_mode"; };

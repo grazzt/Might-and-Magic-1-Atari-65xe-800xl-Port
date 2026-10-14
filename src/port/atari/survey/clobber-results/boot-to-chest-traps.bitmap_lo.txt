@@ -1,0 +1,1 @@
+boot-to-chest-traps                bitmap_lo  events DIFFER; marks 14, code+data memory differs at: ['won', 'chest', 'trap-detected', 'trap-removed']

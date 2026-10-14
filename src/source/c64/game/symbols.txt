@@ -1,0 +1,135 @@
+# Names for addresses, kept by hand. tools/disassemble.py puts them into the
+# generated da65 info files. One per line:
+#   SCOPE ADDRESS NAME ; comment
+# SCOPE is * for an address that means the same in every file (hardware,
+# KERNAL, zero page, resident code), or a module name for a file's own labels.
+# Only names whose meaning has been established go here; how each is known is
+# in docs/C64-RUNTIME.md and docs/C64-CODE.md. Everything else keeps da65's
+# Lxxxx label.
+
+# --- C64 hardware and KERNAL --------------------------------------------
+* 0001 CPU_PORT        ; memory configuration
+* d011 VIC_CTRL1       ; bitmap mode, screen on, raster bit 8
+* d012 VIC_RASTER
+* d016 VIC_CTRL2       ; multicolour mode
+* d018 VIC_MEMORY      ; screen and bitmap base
+* d019 VIC_IRQ
+* d01a VIC_IRQ_MASK
+* d020 VIC_BORDER
+* d021 VIC_BACKGROUND
+* d400 SID
+* d404 SID_V1_CTRL
+* d418 SID_VOLUME
+* d800 COLOR_RAM
+* dc0d CIA1_ICR
+* dd00 CIA2_PORT_A     ; VIC bank and serial lines
+* dd02 CIA2_DDR_A
+* ffe4 KERNAL_GETIN
+* 00a1 JIFFY_MID       ; KERNAL clock, 1/60 s, middle byte
+* 00a2 JIFFY_LOW
+* 00c6 KEY_COUNT       ; KERNAL keyboard buffer count
+* 00cc CURSOR_OFF
+* 028a KEY_REPEAT
+* 028c KEY_REPEAT_DELAY
+* 028d SHIFT_FLAGS     ; KERNAL: bit 0 shift, 1 Commodore, 2 CTRL
+* 028e SHIFT_FLAGS_OLD ; the inn tests bit 2 here for CTRL-letter
+* 0291 SHIFT_LOCKOUT
+* 0314 IRQ_VECTOR
+
+# --- Disk loader ($9D00-$9FFF, source/c64/fastload-c64.info) -------------
+* 9d00 disk_address
+* 9d02 disk_length
+* 9d04 disk_offset
+* 9d05 disk_block
+* 9d07 disk_init
+* 9d0a disk_set_vic_bank
+* 9d0d disk_read
+* 9d10 disk_write
+
+# --- Zero page (traced or checked, docs/C64-RUNTIME.md) ------------------
+* 000b bitmap_row      ; text row for the bitmap printers
+* 000c bitmap_column
+* 0016 random_state    ; 32-bit shift register, $16-$19
+* 001c string_pointer  ; $1C/$1D
+* 0024 text_column     ; text-mode cursor
+* 0025 text_row
+* 002d key_wait_count
+* 002e key_wait_stir   ; copied into the random state on every key
+* 0007 view_page       ; $40 or $60: which bitmap the next view is drawn into; flips at every redraw
+* 0038 square_state    ; state byte of the party's square; bit 7 lets the area's event code run
+* 003b party_x
+* 003c party_y
+* 003d party_square    ; y * 16 + x
+* 003f square_walls    ; wall byte of the party's square
+* 0040 party_facing    ; $C0 north, $30 east, $0C south, $03 west
+
+# --- Resident code: jump table at $0B00 -----------------------------------
+* 0b12 j_random_stir
+* 0b15 j_random
+* 0b18 j_key_wait
+* 0b21 j_text_putchar
+* 0b24 j_text_print
+* 0b2d j_bitmap_putchar
+* 0b36 j_bitmap_print_low
+* 0b39 j_bitmap_print
+* 0b5d j_draw_view
+* 0b78 j_change_area   ; A, X: name codes of the area file; Y: side 1-3
+* 0cfe bitmap_print_low ; string on the lower screen only
+* 0d1c bitmap_putchar  ; character in A at bitmap_row, bitmap_column
+* 0d42 bitmap_print    ; string at string_pointer
+* 0e37 key_wait        ; clears the buffer, polls until a key; returns it in A
+* 0e3b key_wait_loop
+* 0e44 key_wait_accept
+* 0e84 text_putchar
+* 0e91 text_print
+* 1271 random_stir     ; swaps $17/$18 and sets $19 from key_wait_stir
+* 1293 random          ; A = range
+* 14c0 command_table   ; 13 play-mode command handlers, keys at $14B3
+* 16d1 change_area
+
+# --- Resident code: display (read from the listing, 2026-10-10) ------------
+* 0389 display_mode    ; 0 text, 1 lower bitmap on the whole frame, 2 split at raster $B0
+* 0c90 view_pages      ; bitmap base - 1 for each view page ($E000, $2000), then their colour matrices
+* 0f1d draw_view       ; looks the party's square up in both grids and draws the 3-D view into the hidden page
+* 1111 draw_wall_piece ; copies one piece from a picture set (+$1120 per set) into the view page
+* 1f36 clear_view      ; zeroes 16 rows of 30 columns of the hidden page
+* 0dfd copy_view_down  ; copies the upper bitmap ($2000, 20 pages) to $E000 and its colours to $CC00
+* 0e55 text_clear      ; fills $0400-$07E7 with spaces and homes the cursor
+* 1bc7 show_text       ; text mode: display_mode 0
+* 1bf1 show_bitmaps    ; multicolour bitmap mode: display_mode 1 or 2
+* 1c18 color_ram_fill  ; A = colour, 1000 bytes from $D800
+
+# --- Resident code: jump table at $A000 -----------------------------------
+* a02d j_sound         ; A = effect number
+* a036 j_pause         ; A * 32 jiffies, or until a key
+* a087 j_get_key
+* a021 j_play_colors
+* a06c j_message
+* a090 j_set_vic_bank_bits
+* c137 message         ; prints message X at its fixed column and row (tables at $C07E, $C0A8, $C0D2)
+* c276 play_colors     ; colour RAM for the play screen: 30 columns of 1, 10 of 3, 16 rows
+* c2b0 area_name_char  ; exit code in A to a file-name character at $C424,X: below 26 a letter, else a digit
+* c2c0 draw_picture    ; unpacks a picture from $3002 to the lower bitmap at $E2C0, colours at $CC58
+* c31f unpack_byte     ; next byte of a packed picture; $7B, count, value is a run
+* c355 pause           ; waits on the KERNAL clock; a key ends it early
+* c420 set_vic_bank
+* c445 find_file       ; looks a two-character name up in the file table at $4700
+* c499 load_file
+* c4dc load_file_table ; last two blocks of the side to $4700
+* c40d set_vic_bank_bits ; A = the two bank bits for CIA 2 port A, through the loader
+* c424 file_name       ; two characters for find_file
+* c557 sound           ; starts effect A unless sound is off ($03A0, $03A1)
+* c5c5 irq_handler     ; raster split and sound; installed at $C5B9
+* c590 irq_install     ; raster interrupt on, CIA timer interrupt off; keeps the old vector at $C6A2
+* c60c sound_step      ; next four bytes of the effect at ($29) to voice 1
+* c62f sound_off
+* c648 get_key         ; KERNAL GETIN, then: a key stops the sound; shifted punctuation; own repeat delay
+* 0029 sound_pointer
+* 03a0 sound_playing
+* 03a4 sound_effect
+* 4700 file_table
+* 48ff side_number     ; 1 = B, 2 = C, 3 = D
+* c9e8 font            ; 8 bytes per character from $20, inverted
+
+# --- Area files -------------------------------------------------------------
+* 8432 area_event      ; looks party_square up; resident code jumps here after a move when bit 7 of $38 is set

@@ -1,0 +1,47 @@
+# What the static tracer (tools/code6502.py) cannot work out for itself.
+# Format and meaning: read_hints() in tools/disassemble.py.
+
+# The resident block at $3500 calls 30-odd addresses in $2000-$34FF and the
+# three jumps at $4EA0. Only the combat file CM is long enough to hold the
+# former, and C3 starts with those jumps, so that block is combat code.
+calls res-3500 cm-bcd
+calls res-3500 c3-b
+
+# Tables of code addresses, low and high byte together, used through a JMP
+# whose operand the code writes first. The tracer finds the split kind (low
+# bytes in one table, high bytes in another) by itself; for this kind it needs
+# the number of entries.
+# Play-mode command keys: 13 keys at $14B3, 13 addresses at $14C0 (JMP at $1513).
+words res-0b00 14c0 13
+# Combat command keys: 12 keys at $209C, 12 addresses at $20A8 (JMP at $2117).
+words cm-bcd 20a8 12
+
+# The game's one indirect jump, JMP ($004D) at $ACC8: 7 addresses at $ACE9.
+words res-a000 ace9 7
+
+# Which files are in memory together. C3 is the combat file's second part; it
+# holds a jump table and address tables that CM uses, and calls back into CM.
+with cm-bcd c3-b
+with c3-b cm-bcd
+with c3-c cm-bcd
+with c3-d cm-bcd
+# C3 on sides C and D is the same code as on B; only its last 10 bytes differ.
+same c3-c c3-b
+same c3-d c3-b
+
+# Code that nothing was found to reach: no call, jump, branch or table entry
+# anywhere on the four sides names these addresses. Each was read by eye and is
+# plainly code (it calls known routines and ends in RTS or JMP). Disassembled
+# as code and listed as unreferenced in the code map.
+unused start 2120        # clears the colour RAM; copies of it are in the title program
+unused title 417b 41ce   # the same routine, twice
+unused en-bcd 28e9       # 190 bytes at the end of the encounter file
+unused res-3500 3502     # prints a row of marks; reads through a patched pointer
+unused res-3500 3dcd 46b1  # $46B1 calls $3DCD; nothing calls $46B1
+unused res-3500 3d2b     # a JSR in front of the used entry at $3D2E
+unused dm-b 8b47         # five instructions at the end of the area file DM
+unused cm-bcd 33ab 33be   # one JSR more than the entry that is used; a lone JMP
+unused res-a000 c91a     # a second copy of the Y/N reader at $C909
+# Not listed: $4E87 in the block at $4A00 looks like code but runs off the end
+# of the block ($4E9F is the first byte of a two-byte branch). It is a leftover
+# after the block's real end and is kept as data.

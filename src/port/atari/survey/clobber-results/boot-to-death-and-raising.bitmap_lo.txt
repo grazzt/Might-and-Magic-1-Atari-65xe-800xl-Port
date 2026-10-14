@@ -1,0 +1,1 @@
+boot-to-death-and-raising          bitmap_lo  events DIFFER; marks 17, code+data memory differs at: ['won-with-five', 'chest-after-fight', 'one-character-dead', 'town-after-death', 'dead-at-temple', 'raised']

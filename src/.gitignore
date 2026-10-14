@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+/build/
+/state/
+/c64/
+/test-artifacts/

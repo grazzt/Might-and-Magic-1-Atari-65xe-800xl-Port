@@ -1,0 +1,1 @@
+boot-to-fight-and-save             bitmap_lo  events DIFFER; marks 16, code+data memory differs at: ['won', 'stairs-up', 'town-again', 'innkeeper', 'saved']

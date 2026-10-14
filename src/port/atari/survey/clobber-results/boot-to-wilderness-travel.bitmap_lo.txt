@@ -1,0 +1,1 @@
+boot-to-wilderness-travel          bitmap_lo  events same; marks 14, code+data memory differs at: ['travel-victory-1', 'forest-after-battle']

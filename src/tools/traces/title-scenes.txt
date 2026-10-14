@@ -1,0 +1,82 @@
+# The title: its two frames, then SPACE and its eight scenes, each taken when
+# the title program has finished drawing it and starts to wait. Nothing here
+# goes through the game's key wait. The waits before the marks let VICE finish
+# the frame its screenshot is taken from; the title program is still counting
+# then ($41AB counts for about 130,000 instructions, $4168 six times as long).
+until $41ab          # the title's keyboard poll: nothing drawn yet
+wait 16
+until $41ab          # the first frame is complete
+wait $8000
+mark frame-1
+until $41ab
+wait $8000
+mark frame-2
+key 20               # SPACE: the scenes
+until $4168          # scene 2 is complete: the first of its six waits
+wait $8000
+mark scene-2
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 3 is complete: the first of its six waits
+wait $8000
+mark scene-3
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 4 is complete: the first of its six waits
+wait $8000
+mark scene-4
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 5 is complete: the first of its six waits
+wait $8000
+mark scene-5
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 6 is complete: the first of its six waits
+wait $8000
+mark scene-6
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 7 is complete: the first of its six waits
+wait $8000
+mark scene-7
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 8 is complete: the first of its six waits
+wait $8000
+mark scene-8
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168          # scene 9 is complete: the first of its six waits
+wait $8000
+mark scene-9
+until $4168
+until $4168
+until $4168
+until $4168
+until $4168
+until $41ab          # back at the title, music started again
+until $41ab
+wait $8000
+mark frame-again

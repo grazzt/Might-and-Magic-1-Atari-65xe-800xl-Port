@@ -1,0 +1,12 @@
+# Boot side A to the title, leave it with left-arrow (the game's Escape),
+# swap to side B at the prompt and stop at the options menu.
+until $41ab          # title keyboard poll
+mark title
+key 5f               # left arrow: the game's Escape
+wait $1000000        # this prompt polls the keyboard itself, not through $0E3B
+mark insert-b
+attach B
+wait $100000         # let the drive notice the new disk
+key 0d
+ready
+mark menu
